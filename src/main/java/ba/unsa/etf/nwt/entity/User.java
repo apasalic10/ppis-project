@@ -2,18 +2,18 @@ package ba.unsa.etf.nwt.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    private String passwordHash;
+    private String password;
     private String firstName;
     private String lastName;
     private String phoneNumber;
@@ -36,6 +36,9 @@ public class User {
     private UserRole role;
 
     private String profilePicture;
+
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
     @PrePersist
     public void prePersist() {
