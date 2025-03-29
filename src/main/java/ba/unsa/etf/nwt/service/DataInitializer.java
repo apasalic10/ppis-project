@@ -124,7 +124,7 @@ public class DataInitializer {
 
             Session session2 = new Session();
             session2.setUuid(UUID.randomUUID().toString());
-            session2.setServiceAgreement(agreement2);
+            session2.setServiceAgreement(agreement1);
             session2.setStartTime(new Date());
             session2.setEndTime(new Date(System.currentTimeMillis() + (2 * 3600000L))); // +2 hours
             session2.setStatus("PENDING");
@@ -181,7 +181,7 @@ public class DataInitializer {
 
             Review review2 = new Review();
             review2.setUuid(UUID.randomUUID().toString());
-            review2.setServiceAgreement(agreement2);
+            review2.setServiceAgreement(agreement1);
             review2.setSession(session2);
             review2.setReviewerId("teacher_999");
             review2.setRevieweeId("student_888");

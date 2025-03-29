@@ -21,7 +21,7 @@ public class Review {
     private String uuid;
 
     @ManyToOne
-    @JoinColumn(name = "service_agreement_id", nullable = false, unique = true)
+    @JoinColumn(name = "service_agreement_id", nullable = false)
     private ServiceAgreement serviceAgreement;
 
     @OneToOne

@@ -32,7 +32,7 @@ public class ServiceAgreement {
     private String terms;
     private boolean autoRenew;
 
-    @OneToOne(mappedBy = "serviceAgreement", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "serviceAgreement", orphanRemoval = true)
     private Invoice invoice;
 
     @OneToOne(mappedBy = "serviceAgreement", cascade = CascadeType.ALL, orphanRemoval = true)
