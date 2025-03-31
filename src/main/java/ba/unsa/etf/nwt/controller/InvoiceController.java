@@ -1,15 +1,13 @@
 package ba.unsa.etf.nwt.controller;
 
 import ba.unsa.etf.nwt.DTO.InvoiceDTO;
+import ba.unsa.etf.nwt.DTO.InvoicePostDTO;
 import ba.unsa.etf.nwt.repository.InvoiceRepository;
 import ba.unsa.etf.nwt.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -31,6 +29,16 @@ public class InvoiceController {
             InvoiceDTO dto = invoiceService.getInvoiceDTOById(id);
             return ResponseEntity.ok().body(dto);
         }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("Error message",e.getMessage()));
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> createInvoice(@RequestBody InvoicePostDTO dto) {
+        try {
+            String createdInvoice = invoiceService.createInvoice(dto);
+            return ResponseEntity.ok().body(createdInvoice);
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("Error message",e.getMessage()));
         }
     }
