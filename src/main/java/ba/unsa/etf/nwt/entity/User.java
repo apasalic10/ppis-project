@@ -21,7 +21,6 @@ public abstract class User {
 
     @Column(unique = true, nullable = false, updatable = false)
     private String uuid;
-
     @Column(unique = true, nullable = false)
     private String email;
 

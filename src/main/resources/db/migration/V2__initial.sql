@@ -17,4 +17,8 @@ INSERT INTO students (experience, user_id)
 values('i have some experience', (select id from users where email = 'student@example.com'));
 
 insert into verifications (document_type, document_url, review_date, reviewer_id, reviewer_notes, status, submission_date, teacher_id)
-values ('pdf', 'as/asd', NOW(), 1, 'notes', 'dobar', NOW(),  (SELECT id FROM users WHERE email = 'ilhan@gmail.com'))
+values ('pdf', 'as/asd', NOW(), 1, 'notes', 'dobar', NOW(),  (SELECT id FROM users WHERE email = 'ilhan@gmail.com'));
+
+INSERT INTO profiles (description, education, location, preferences, years_of_experience, user_id)
+VALUES
+    ('This is description for profile 1', 'High school', 'Sarajevo', 'no', 2, (select id from users where email = 'student@example.com'));
