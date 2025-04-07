@@ -3,6 +3,7 @@ package ba.unsa.etf.nwt.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,8 +24,8 @@ public class Category {
     private String iconUrl;
     private Integer sortOrder;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Listing> listings;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ListingCategory> listingCategories = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "parent_category_id")

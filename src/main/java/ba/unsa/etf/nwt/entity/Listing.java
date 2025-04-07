@@ -3,8 +3,9 @@ package ba.unsa.etf.nwt.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -39,7 +40,7 @@ public abstract class Listing {
             joinColumns = @JoinColumn(name = "listing_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
     @ManyToMany
     @JoinTable(
@@ -47,15 +48,10 @@ public abstract class Listing {
             joinColumns = @JoinColumn(name = "listing_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_level_id")
     )
-    private Set<SkillLevel> skillLevels;
+    private List<SkillLevel> skillLevels;
 
-    @ManyToMany
-    @JoinTable(
-            name = "listing_categories",
-            joinColumns = @JoinColumn(name = "listing_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Category> categories;
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ListingCategory> listingCategories = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
