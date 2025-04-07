@@ -41,8 +41,8 @@ public class ServiceAgreementService {
                 sa.getEndDate(),
                 sa.getTerms(),
                 (sa.getInvoice() != null) ? sa.getInvoice().getInvoiceNumber() : null,
-                (sa.getLearningProgress() != null) ? sa.getLearningProgress().getCurrentLevel() : null,
-                (sa.getPayment() != null) ? sa.getPayment().getAmount() : null,
+                (sa.getLearningProgress() != null) ? sa.getLearningProgress().getCurrentLevel() : 0,
+                (sa.getPayment() != null) ? sa.getPayment().getAmount() : 0,
                 sessionStatuses,
                 (ratings != null && !ratings.isEmpty()) ? ratings.stream().mapToInt(Integer::intValue).sum()/ ratings.size() : null
         );
@@ -105,7 +105,9 @@ public class ServiceAgreementService {
         // Save updated entity
         ServiceAgreement updatedSA = serviceAgreementRepository.save(sa);
 
-        return convertToDTO(updatedSA);
+        ServiceAgreementDTO updatedSADTO = convertToDTO(updatedSA);
+
+        return updatedSADTO;
     }
 
 }
