@@ -1,5 +1,8 @@
 package ba.unsa.etf.nwt.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ListingCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +23,7 @@ public class ListingCategory {
 
     @ManyToOne
     @JoinColumn(name = "listing_id", nullable = false)
+    @JsonBackReference
     private Listing listing;
 
     @ManyToOne
