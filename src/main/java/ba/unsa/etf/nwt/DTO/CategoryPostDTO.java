@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwt.DTO;
 
+import ba.unsa.etf.nwt.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,21 @@ public class CategoryPostDTO {
     private String iconUrl;
     private Integer sortOrder;
 
-    private Long parentCategoryId;
-    private List<Long> subcategoryIds;
+    private Category parentCategory;
+    private List<CategoryPostDTO> subcategory;
+
+    public CategoryPostDTO(Category category) {
+        this.name = category.getName();
+        this.description = category.getDescription();
+        this.iconUrl = category.getIconUrl();
+        this.sortOrder = category.getSortOrder();
+
+        this.parentCategory = category.getParentCategory();
+
+        this.subcategory = category.getSubcategories() != null
+                ? category.getSubcategories().stream()
+                .map(CategoryPostDTO::new)
+                .toList()
+                : null;
+    }
 }

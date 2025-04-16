@@ -1,17 +1,18 @@
 package ba.unsa.etf.nwt.controller;
 
+import ba.unsa.etf.nwt.DTO.LearningRequestPostDTO;
 import ba.unsa.etf.nwt.DTO.ListingDTO;
 import ba.unsa.etf.nwt.DTO.TeachingOfferingPostDTO;
-import ba.unsa.etf.nwt.DTO.LearningRequestPostDTO;
-import ba.unsa.etf.nwt.entity.Listing;
 import ba.unsa.etf.nwt.service.ListingService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -54,25 +55,6 @@ public class ListingController {
             return new ResponseEntity<>(listingDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PatchMapping(path = "/{id}", consumes = "application/json-patch+json")
-    public ResponseEntity<ListingDTO> updateListing(@PathVariable Long id,
-                                                    @RequestBody JsonPatch patch) {
-        try {
-            Listing listing = listingService.getListingById(id);
-            if (listing == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            Listing patchedListing = listingService.applyPatchToListing(patch, listing);
-            patchedListing = listingService.save(patchedListing);
-            ListingDTO listingDTO = listingService.convertToDto(patchedListing);
-            return new ResponseEntity<>(listingDTO, HttpStatus.OK);
-        } catch (JsonPatchException | JsonProcessingException e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 

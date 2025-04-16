@@ -3,5 +3,8 @@ package ba.unsa.etf.nwt.repository;
 import ba.unsa.etf.nwt.entity.SkillLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface SkillLevelRepository extends JpaRepository<SkillLevel, Long> {
+    Optional<SkillLevel> findByName(String name);
 }
