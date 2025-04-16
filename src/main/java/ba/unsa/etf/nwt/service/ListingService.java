@@ -17,11 +17,15 @@ import ba.unsa.etf.nwt.repository.CategoryRepository;
 import ba.unsa.etf.nwt.repository.ListingRepository;
 import ba.unsa.etf.nwt.repository.SkillLevelRepository;
 import ba.unsa.etf.nwt.repository.TagRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ListingService {
@@ -41,14 +45,26 @@ public class ListingService {
         this.skillLevelRepository = skillLevelRepository;
     }
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+
     public ListingDTO getListingDTOById(Long id) {
         Listing listing = listingRepository.findById(id).orElseThrow(() -> new RuntimeException("Listing with id " + id + " not found"));
-        return new ListingDTO(listing);
+        return modelMapper.map(listing, ListingDTO.class);
     }
 
-    public List<ListingDTO> getAllListings() {
-        List<Listing> listings = listingRepository.findAll();
-        return listings.stream().map(ListingDTO::new).toList();
+    public Page<ListingDTO> getAllListings(Pageable pageable) {
+        Page<Listing> listingsPage = listingRepository.findAll(pageable);
+
+        return listingsPage.map(listing -> modelMapper.map(listing, ListingDTO.class));
+    }
+
+    public List<ListingDTO> filterListings(String status, Float minPrice, Float maxPrice, String title) {
+        List<Listing> listings = listingRepository.filterListings(status, minPrice, maxPrice, title);
+        return listings.stream()
+                .map(listing -> modelMapper.map(listing, ListingDTO.class))
+                .collect(Collectors.toList());
     }
 
     public String createTeachingOffering(TeachingOfferingPostDTO teachingOfferingDTO) {

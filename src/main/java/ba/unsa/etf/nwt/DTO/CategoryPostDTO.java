@@ -22,19 +22,4 @@ public class CategoryPostDTO {
 
     private Category parentCategory;
     private List<CategoryPostDTO> subcategory;
-
-    public CategoryPostDTO(Category category) {
-        this.name = category.getName();
-        this.description = category.getDescription();
-        this.iconUrl = category.getIconUrl();
-        this.sortOrder = category.getSortOrder();
-
-        this.parentCategory = category.getParentCategory();
-
-        this.subcategory = category.getSubcategories() != null
-                ? category.getSubcategories().stream()
-                .map(CategoryPostDTO::new)
-                .toList()
-                : null;
-    }
 }

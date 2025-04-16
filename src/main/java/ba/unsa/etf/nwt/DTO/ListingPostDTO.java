@@ -30,21 +30,4 @@ public class ListingPostDTO {
     private List<TagPostDTO> tags;
     private List<SkillLevel> skillLevels;
     private List<CategoryPostDTO> categories;
-
-    public ListingPostDTO(Listing listing) {
-        this.title = listing.getTitle();
-        this.description = listing.getDescription();
-        this.status = listing.getStatus();
-        this.price = listing.getPrice();
-        this.pricingModel = listing.getPricingModel();
-        this.featured = listing.isFeatured();
-
-        this.tags = listing.getTags().stream().map(TagPostDTO::new).collect(Collectors.toList());
-        this.skillLevels = listing.getSkillLevels();
-
-        this.categories = listing.getListingCategories().stream()
-                .map(ListingCategory::getCategory)
-                .map(CategoryPostDTO::new)
-                .collect(Collectors.toList());
-    }
 }

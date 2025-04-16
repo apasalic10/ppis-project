@@ -25,19 +25,4 @@ public class ListingDTO {
     private String pricingModel;
     private Integer viewCount;
     private boolean featured;
-
-    public ListingDTO(Listing listing) {
-        if (listing != null) {
-            this.listingId = listing.getId();
-            this.title = listing.getTitle();
-            this.description = listing.getDescription();
-            this.creationDate = listing.getCreationDate();
-            this.lastUpdated = listing.getLastUpdated();
-            this.status = listing.getStatus();
-            this.price = listing.getPrice();
-            this.pricingModel = listing.getPricingModel();
-            this.viewCount = listing.getViewCount();
-            this.featured = listing.isFeatured();
-        }
-    }
 }

@@ -16,10 +16,4 @@ public class SkillLevelDTO {
     private String name;
     private String description;
     private Integer sortOrder;
-
-    public SkillLevelDTO(SkillLevel skillLevel) {
-        this.name = skillLevel.getName();
-        this.description = skillLevel.getDescription();
-        this.sortOrder = skillLevel.getSortOrder();
-    }
 }
