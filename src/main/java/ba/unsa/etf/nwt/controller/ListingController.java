@@ -32,26 +32,6 @@ public class ListingController {
         this.listingService = listingService;
     }
 
-    @PostMapping("/teaching-offering")
-    public ResponseEntity<String> createTeachingOffering(@Valid @RequestBody TeachingOfferingPostDTO teachingOfferingDTO) {
-        try {
-            String uuid = listingService.createTeachingOffering(teachingOfferingDTO);
-            return new ResponseEntity<>(uuid, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/learning-request")
-    public ResponseEntity<String> createLearningRequest(@Valid @RequestBody LearningRequestPostDTO learningRequestDTO) {
-        try {
-            String uuid = listingService.createLearningRequest(learningRequestDTO);
-            return new ResponseEntity<>(uuid, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ListingDTO> getListingById(@PathVariable("id") Long id) {
         try {
